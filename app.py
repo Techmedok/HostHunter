@@ -9,6 +9,8 @@ import jwt
 from functools import wraps
 import os
 from dotenv import load_dotenv
+from urllib.parse import urlparse
+import re
 
 load_dotenv()
 
@@ -120,6 +122,51 @@ def logout():
     session.pop('jwt_token', None)  
     flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
+
+@app.route("/search", methods=["GET"])
+def search():
+    return render_template("search.html")
+
+@app.route("/report", methods=["POST"])
+def report():
+    url = request.form.get("search", "")
+
+    # Finetune the Logic and Clean the Structure
+    parsed_url = urlparse(url)
+    domain = parsed_url.netloc or parsed_url.path
+
+    if domain.startswith('www.'):
+        domain = domain[4:]
+
+    domain = domain.rstrip('/')
+
+    if not re.match(r'^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', domain):
+        url = None
+    
+    url = domain
+
+    if not url:
+        return None
+    
+    print(url)
+
+    # user_data = {"url":"techmedok.com","timestamp": datetime.datetime.now().isoformat()}
+    # mongo.db.reports.insert_one(user_data)
+
+    reports = mongo.db.reports.find({"url": url})
+
+    results = []
+    for report in reports:
+        report["_id"] = str(report["_id"])  # Convert ObjectId to string
+        results.append(report)
+
+    if len(results) == 0:
+        a=None # Direct Generate Function
+        print("2")
+
+    print(results)
+
+    return f"{list(results)}"
 
 @app.route('/whois', methods=['GET', 'POST'])
 def route():
