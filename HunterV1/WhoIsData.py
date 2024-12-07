@@ -3,7 +3,7 @@ import logging
 import sys
 import time
 
-def GetWhois(domain, verbose=False, max_retries=2, retry_delay=1):
+def GetWhois(domain, max_retries=2, retry_delay=1):
     """
     Retrieve WHOIS information for a given domain with comprehensive error handling and retry mechanism.
     
@@ -16,13 +16,7 @@ def GetWhois(domain, verbose=False, max_retries=2, retry_delay=1):
     Returns:
         dict: Dictionary containing all WHOIS information or empty dictionaries if lookup fails
     """
-    # # Configure logging based on verbose flag
-    # logging.basicConfig(
-    #     level=logging.INFO if verbose else logging.ERROR, 
-    #     format='%(asctime)s - %(levelname)s: %(message)s',
-    #     stream=sys.stderr
-    # )
-        # Configure logging
+    
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

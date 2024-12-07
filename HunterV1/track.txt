@@ -1,7 +1,16 @@
 To Do:
-
+Site Tech
+Metadata
+Site Analysis
+Open Ports
+Social Links
+SSL
+Contact Details
 
 Done:
 IPData
 WhoIs
 IP Finder
+DNS
+Headers
+Mail Server

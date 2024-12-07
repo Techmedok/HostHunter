@@ -7,7 +7,6 @@ from typing import List, Optional
 import playwright.sync_api
 from bs4 import BeautifulSoup
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

@@ -18,7 +18,6 @@ def GetIPData(ip, max_retries=2, retry_delay=1):
         dict: Detailed IP information or empty dict if lookup fails
     """
 
-    # Configure logging
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -28,12 +27,6 @@ def GetIPData(ip, max_retries=2, retry_delay=1):
         ]
     )
 
-    # # Configure logging based on verbose flag
-    # logging.basicConfig(
-    #     level=logging.INFO if verbose else logging.ERROR,
-    #     format='%(asctime)s - %(levelname)s: %(message)s',
-    #     stream=sys.stderr
-    # )
     logger = logging.getLogger(__name__)
 
     # Validate IP address format
