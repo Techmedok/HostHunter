@@ -1,7 +1,4 @@
 To Do:
-Site Analysis
-Open Ports
-SSL
 Contact Details
 
 Done:
@@ -14,3 +11,6 @@ Mail Server
 Metadata
 Social Links
 Site Tech
+Site Analysis
+Open Ports
+SSL

@@ -52,7 +52,8 @@ def GetSiteDataAndHeaders(
             response = requests.get(
                 domain, 
                 headers=headers, 
-                timeout=timeout
+                timeout=timeout,
+                verify=False 
             )
             
             # Raise an exception for bad status codes

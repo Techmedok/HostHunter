@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from groq import Groq
 import re
 import json
@@ -10,7 +11,11 @@ def extract_json(text):
     else:
         return None
 
-def SiteAnalysis(content):
+def GetSiteAnalysis(content):
+    soup = BeautifulSoup(content, 'html.parser')
+    text = soup.get_text()
+    text = '\n'.join([line for line in text.splitlines() if line.strip()])
+
     client = Groq(api_key="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")
     completion = client.chat.completions.create(
         model="llama-3.1-8b-instant",
@@ -23,7 +28,7 @@ def SiteAnalysis(content):
                                     site category (String)
                                 I dont need any other data other than this in your output.
                                 Site Contents:
-                                {content}
+                                {text}
                             """,
             }],
         temperature=1,
@@ -34,8 +39,3 @@ def SiteAnalysis(content):
     )
 
     return extract_json(completion.choices[0].message.content)
-
-content = ""
-out = SiteAnalysis(content)
-print(out)
-print(type(out))

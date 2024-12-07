@@ -9,6 +9,9 @@ from MailServerData import GetMaiServerData
 from MetaData import GetMetaData
 from SocialLinks import ExtractSocialLinks
 from SiteTech import GetSiteTech
+from SiteAnalysis import GetSiteAnalysis
+from PortScanning import GetOpenPorts
+from SSLData import GetSSLData
 
 def ExtractDomain(url):
     domain = re.sub(r'^https?://', '', url)
@@ -27,41 +30,50 @@ def Main(url):
     domain = ExtractDomain(url)
     ip = DomainCheck(domain)
 
-    # print(domain)
-    # print(ip)
+    print(domain)
+    print(ip)
 
     if not ip:
         return None
     
-    # ipdata = GetIPData(ip)
-    # print(ipdata)
+    ipdata = GetIPData(ip)
+    print(ipdata)
 
-    # whoisdata = GetWhois(domain)
-    # print(whoisdata)
+    whoisdata = GetWhois(domain)
+    print(whoisdata)
 
-    # SiteIP = GetSiteIP(url, ip)
-    # print(SiteIP)
+    SiteIP = GetSiteIP(url, ip)
+    print(SiteIP)
 
-    # DNSRecords = GetDNSRecords(domain)
-    # print(DNSRecords)
+    DNSRecords = GetDNSRecords(domain)
+    print(DNSRecords)
 
-    # Headers, Content = GetSiteDataAndHeaders(domain)
-    # print(Headers)
-    # print(Content[:200])
+    Headers, Content = GetSiteDataAndHeaders(domain)
+    print(Headers)
+    print(Content[:200])
 
-    # IncomingMails, OutgoingMails = GetMaiServerData(domain)
-    # print(IncomingMails)
-    # print(OutgoingMails)
+    IncomingMails, OutgoingMails = GetMaiServerData(domain)
+    print(IncomingMails)
+    print(OutgoingMails)
     
-    # Metadata = GetMetaData(Content)
-    # print(Metadata)
+    Metadata = GetMetaData(Content)
+    print(Metadata)
 
-    # SocialLinks = ExtractSocialLinks(Content)
-    # print(SocialLinks)
+    SocialLinks = ExtractSocialLinks(Content)
+    print(SocialLinks)
 
-    # SiteTech = GetSiteTech(domain)
-    # print(SiteTech)
+    SiteTech = GetSiteTech(domain)
+    print(SiteTech)
+
+    SiteAnalysis = GetSiteAnalysis(Content)
+    print(SiteAnalysis)
+
+    OpenPorts = GetOpenPorts(ip)
+    print(OpenPorts)
+
+    SSLData = GetSSLData(domain)
+    print(SSLData)
 
     return True
 
-Main("techmedok.com")
+Main("sih.gov.in")
