@@ -6,6 +6,9 @@ from IPFinder import GetSiteIP
 from DNSData import GetDNSRecords
 from SiteData import GetSiteDataAndHeaders
 from MailServerData import GetMaiServerData
+from MetaData import GetMetaData
+from SocialLinks import ExtractSocialLinks
+from SiteTech import GetSiteTech
 
 def ExtractDomain(url):
     domain = re.sub(r'^https?://', '', url)
@@ -24,32 +27,41 @@ def Main(url):
     domain = ExtractDomain(url)
     ip = DomainCheck(domain)
 
-    print(domain)
-    print(ip)
+    # print(domain)
+    # print(ip)
 
     if not ip:
         return None
     
-    ipdata = GetIPData(ip)
-    print(ipdata)
+    # ipdata = GetIPData(ip)
+    # print(ipdata)
 
-    whoisdata = GetWhois(domain)
-    print(whoisdata)
+    # whoisdata = GetWhois(domain)
+    # print(whoisdata)
 
-    SiteIP = GetSiteIP(url, ip)
-    print(SiteIP)
+    # SiteIP = GetSiteIP(url, ip)
+    # print(SiteIP)
 
-    DNSRecords = GetDNSRecords(domain)
-    print(DNSRecords)
+    # DNSRecords = GetDNSRecords(domain)
+    # print(DNSRecords)
 
-    Headers, Contents = GetSiteDataAndHeaders(domain)
-    print(Headers)
-    print(Contents[:200])
+    # Headers, Content = GetSiteDataAndHeaders(domain)
+    # print(Headers)
+    # print(Content[:200])
 
-    IncomingMails, OutgoingMails = GetMaiServerData(domain)
-    print(IncomingMails)
-    print(OutgoingMails)
+    # IncomingMails, OutgoingMails = GetMaiServerData(domain)
+    # print(IncomingMails)
+    # print(OutgoingMails)
     
+    # Metadata = GetMetaData(Content)
+    # print(Metadata)
+
+    # SocialLinks = ExtractSocialLinks(Content)
+    # print(SocialLinks)
+
+    # SiteTech = GetSiteTech(domain)
+    # print(SiteTech)
+
     return True
 
-Main("1tamilblasters.fit")
+Main("techmedok.com")
