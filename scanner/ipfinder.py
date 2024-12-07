@@ -69,5 +69,5 @@ def GetSiteIP(url, cookies_path = "c.json"):
             context.close()
             browser.close()
 
-# url = "techmedok.com"
-# print(GetSiteIP(url))
+url = "techmedok.com"
+print(GetSiteIP(url))

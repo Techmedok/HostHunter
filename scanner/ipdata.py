@@ -20,5 +20,5 @@ def GetIPData(ip):
     }
     return ipdetails
 
-ip="20.204.13.165"
-print(GetIPData(ip))
+# ip="20.204.13.165"
+# print(GetIPData(ip))

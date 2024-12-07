@@ -1,124 +1,94 @@
 import dns.resolver
 import socket
+import json
+from typing import Dict, List, Optional, Union, Any
 
-def get_dns_records(domain):
-    """
-    Retrieve various DNS record types for a given domain.
+def GetDNSRecords(domain: str) -> Dict[str, Optional[List[Dict[str, Union[str, int]]]]]:
+    resolver = dns.resolver.Resolver()
+    resolver.timeout = 3  
+    resolver.lifetime = 5 
     
-    Args:
-        domain (str): The domain name to query
-    """
     record_types = {
-        'A': dns.resolver.resolve,
-        'AAAA': dns.resolver.resolve,
-        'CNAME': dns.resolver.resolve,
-        'MX': dns.resolver.resolve,
-        'NS': dns.resolver.resolve,
-        'TXT': dns.resolver.resolve,
-        'SRV': dns.resolver.resolve,
-        'CAA': dns.resolver.resolve
+        'A': 'resolve_standard',
+        'AAAA': 'resolve_standard', 
+        'CNAME': 'resolve_standard',
+        'MX': 'resolve_mx',
+        'NS': 'resolve_standard', 
+        'TXT': 'resolve_standard',
+        'CAA': 'resolve_standard',
+        'SOA': 'resolve_soa'
     }
     
-    # PTR record requires a reverse IP lookup
-    def get_ptr_record(domain):
-        try:
-            return socket.gethostbyaddr(socket.gethostbyname(domain))[0]
-        except (socket.herror, socket.gaierror):
-            return "PTR record not found"
+    results: Dict[str, Optional[List[Dict[str, Union[str, int]]]]] = {}
     
-    # SOA record has a slightly different resolution method
-    def get_soa_record(domain):
+    def resolve_standard(record_type: str) -> Optional[List[Dict[str, Union[str, int]]]]:
         try:
-            soa = dns.resolver.resolve(domain, 'SOA')
-            return str(soa[0])
+            answers = resolver.resolve(domain, record_type)
+            return [
+                {
+                    "Content": str(rdata),
+                    "TTL": answers.response.answer[0].ttl if answers.response.answer else None,
+                    "Type": record_type
+                } 
+                for rdata in answers
+            ]
+        except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer, 
+                dns.resolver.NoNameservers, dns.exception.Timeout):
+            return None
+    
+    def resolve_mx(record_type: str) -> Optional[List[Dict[str, Union[str, int]]]]:
+        try:
+            answers = resolver.resolve(domain, record_type)
+            return [
+                {
+                    "Content": f"{rdata.preference} {rdata.exchange}",
+                    "Preference": rdata.preference,
+                    "Exchange": str(rdata.exchange),
+                    "TTL": answers.response.answer[0].ttl if answers.response.answer else None,
+                    "Type": record_type
+                } 
+                for rdata in answers
+            ]
+        except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer, 
+                dns.resolver.NoNameservers, dns.exception.Timeout):
+            return None
+    
+    def resolve_soa(record_type: str) -> Optional[List[Dict[str, Union[str, int]]]]:
+        try:
+            answers = resolver.resolve(domain, record_type)
+            soa_record = answers[0]
+            return [
+                {
+                    "Content": str(soa_record),
+                    "Mname": str(soa_record.mname),
+                    "Rname": str(soa_record.rname),
+                    "Serial": soa_record.serial,
+                    "Refresh": soa_record.refresh,
+                    "Retry": soa_record.retry,
+                    "Expire": soa_record.expire,
+                    "Minimum": soa_record.minimum,
+                    "TTL": answers.response.answer[0].ttl if answers.response.answer else None,
+                    "Type": record_type
+                }
+            ]
         except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer):
-            return "SOA record not found"
+            return None
     
-    print(f"DNS Records for {domain}:")
-    print("-" * 40)
+    def get_ptr_record() -> Optional[List[Dict[str, str]]]:
+        try:
+            ip_address = socket.gethostbyname(domain)
+            ptr = socket.gethostbyaddr(ip_address)[0]
+            return [{"Content": ptr, "Type": "PTR"}]
+        except (socket.herror, socket.gaierror):
+            return None
     
-    # Lookup A Record
-    try:
-        a_records = record_types['A'](domain, 'A')
-        print("A Records:")
-        for rdata in a_records:
-            print(f"  {rdata}")
-    except Exception as e:
-        print(f"A Record Error: {e}")
+    for record_type, resolver_method in record_types.items():
+        results[record_type] = locals()[resolver_method](record_type)
     
-    # Lookup AAAA Record
-    try:
-        aaaa_records = record_types['AAAA'](domain, 'AAAA')
-        print("\nAAAA Records:")
-        for rdata in aaaa_records:
-            print(f"  {rdata}")
-    except Exception as e:
-        print(f"AAAA Record Error: {e}")
+    results['PTR'] = get_ptr_record()
     
-    # Lookup CNAME Record
-    try:
-        cname_records = record_types['CNAME'](domain, 'CNAME')
-        print("\nCNAME Records:")
-        for rdata in cname_records:
-            print(f"  {rdata}")
-    except Exception as e:
-        print(f"CNAME Record Error: {e}")
-    
-    # Lookup MX Record
-    try:
-        mx_records = record_types['MX'](domain, 'MX')
-        print("\nMX Records:")
-        for rdata in mx_records:
-            print(f"  Priority: {rdata.preference}, Mail Server: {rdata.exchange}")
-    except Exception as e:
-        print(f"MX Record Error: {e}")
-    
-    # Lookup NS Record
-    try:
-        ns_records = record_types['NS'](domain, 'NS')
-        print("\nNS Records:")
-        for rdata in ns_records:
-            print(f"  {rdata}")
-    except Exception as e:
-        print(f"NS Record Error: {e}")
-    
-    # PTR Record (Reverse DNS)
-    print("\nPTR Record:")
-    print(f"  {get_ptr_record(domain)}")
-    
-    # Lookup SOA Record
-    print("\nSOA Record:")
-    print(f"  {get_soa_record(domain)}")
-    
-    # Lookup TXT Record
-    try:
-        txt_records = record_types['TXT'](domain, 'TXT')
-        print("\nTXT Records:")
-        for rdata in txt_records:
-            print(f"  {rdata}")
-    except Exception as e:
-        print(f"TXT Record Error: {e}")
-    
-    # Lookup SRV Record (example service)
-    try:
-        srv_records = record_types['SRV'](f"_sip._tcp.{domain}", 'SRV')
-        print("\nSRV Records:")
-        for rdata in srv_records:
-            print(f"  Priority: {rdata.priority}, Weight: {rdata.weight}, "
-                  f"Port: {rdata.port}, Target: {rdata.target}")
-    except Exception as e:
-        print(f"SRV Record Error: {e}")
-    
-    # Lookup CAA Record
-    try:
-        caa_records = record_types['CAA'](domain, 'CAA')
-        print("\nCAA Records:")
-        for rdata in caa_records:
-            print(f"  {rdata}")
-    except Exception as e:
-        print(f"CAA Record Error: {e}")
+    return results
 
-# Example usage
-if __name__ == "__main__":
-    domain = "techmedok.com"  # Replace with the domain you want to query
-    get_dns_records(domain)
+# domain = "techmedok.com"  
+# dns_records = GetDNSRecords(domain)
+# print(json.dumps(dns_records, indent=2))
