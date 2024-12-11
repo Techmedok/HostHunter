@@ -1,5 +1,3 @@
-import requests
-import pytz
 import datetime
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,8 +7,12 @@ import jwt
 from functools import wraps
 import os
 from dotenv import load_dotenv
-from urllib.parse import urlparse
 import re
+import threading
+import HunterV1.Main
+import string
+import random
+from datetime import timedelta
 
 load_dotenv()
 
@@ -61,10 +63,16 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def GenRandomID(length=16):
+    characters = string.ascii_letters + string.digits
+    random_id = ''.join(random.choices(characters, k=length))
+    return random_id
+
 @app.route('/')
 @login_required
 def home():
-    return f"Hello, {session['name']}! <br><a href='/logout'>Logout</a>"
+    # return f"Hello, {session['name']}, {session["email"]}! <br><a href='/logout'>Logout</a>"
+    return f"Hello, {session['name']}, {session['email']}! <br><a href='/logout'>Logout</a>"
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -124,68 +132,157 @@ def logout():
     return redirect(url_for('login'))
 
 @app.route("/search", methods=["GET"])
+@login_required
 def search():
     return render_template("search.html")
 
 @app.route("/report", methods=["POST"])
+@login_required
 def report():
     url = request.form.get("search", "")
-
-    # Finetune the Logic and Clean the Structure
-    parsed_url = urlparse(url)
-    domain = parsed_url.netloc or parsed_url.path
-
-    if domain.startswith('www.'):
-        domain = domain[4:]
-
-    domain = domain.rstrip('/')
-
-    if not re.match(r'^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', domain):
-        url = None
     
-    url = domain
-
-    if not url:
-        return None
+    domain = re.sub(r'^https?://', '', url)
+    domain = re.sub(r'^www\.', '', domain)
+    url = domain.split('/')[0]
     
-    print(url)
+    document = mongo.db.reports.find({"url": url}).sort("timestamp", -1).limit(1)
 
-    # user_data = {"url":"techmedok.com","timestamp": datetime.datetime.now().isoformat()}
-    # mongo.db.reports.insert_one(user_data)
+    if len(list(document)) > 0:
+        document = mongo.db.reports.find({"url": url}).sort("timestamp", -1).limit(1)
+        first_doc = next(document, None)
+        if first_doc:
+            doc_timestamp = first_doc.get("timestamp")
+            doc_time = datetime.datetime.fromisoformat(doc_timestamp)
+            current_time = datetime.datetime.now()
+            if current_time - doc_time <= timedelta(days=7):
+                dss = {
+                    "summary": first_doc["siteanalysis"]["summary"]
+                }
+                return redirect(url_for("result", report_id=first_doc["id"]))
 
-    reports = mongo.db.reports.find({"url": url})
+    randomid = GenRandomID()
+    timestamp = datetime.datetime.now().isoformat()
 
-    results = []
-    for report in reports:
-        report["_id"] = str(report["_id"])  # Convert ObjectId to string
-        results.append(report)
+    ds = {
+        "id": randomid,
+        "timestamp": timestamp,
+        "url": url,
+        "status": "inprogress",
+        "user": session['email']
+    }
 
-    if len(results) == 0:
-        a=None # Direct Generate Function
-        print("2")
+    mongo.db.reports.insert_one(ds)
 
-    print(results)
+    thread = threading.Thread(target=HunterV1.Main.Main, args=(url, randomid, timestamp, mongo, ))
+    thread.daemon = True
+    thread.start()
 
-    return f"{list(results)}"
+    return render_template("loading.html", report_id=randomid, timestamp=timestamp)
 
-@app.route('/whois', methods=['GET', 'POST'])
-def route():
-    if request.method == 'POST':
-        url = request.form.get('url')
-        requesturl = "https://who-dat.as93.net/" + url
-        response = requests.get(requesturl)
-        data = response.json()
+@app.route("/status/<report_id>")
+@login_required
+def status(report_id):
+    record = mongo.db.reports.find_one({"id": report_id})
+    if record:
+        return {"status": record.get("status", "unknown")}
+    return {"status": "not_found"}
 
-        domainname = data["domain"]["domain"]
-        registrar = data["registrar"]["name"]
-        regdate = data["domain"]["created_date"]
-        expdate = data["domain"]["expiration_date"]
-        rendate = data["domain"]["expiration_date_in_time"]
+@app.route("/result/<report_id>")
+@login_required
+def result(report_id):
+    record = mongo.db.reports.find_one({"id": report_id})
+    if record and record.get("status") == "completed":
+        return render_template("report.html", id=report_id, data=record) 
+    return "Report not found or not ready yet."
 
-        regdate = datetime.datetime.strptime(regdate, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=pytz.UTC)
+@app.route("/whois/<report_id>")
+@login_required
+def WhoisData(report_id):
+    record = mongo.db.reports.find_one({"id": report_id})
+    if record and record.get("status") == "completed":
+        return render_template("whois.html", id=report_id, data=record["whois"]) 
+        # return f"{record['whois']}"
+    return "Report not found or not ready yet."
 
-        return render_template('whois1.html', domain = domainname, registrar=registrar, regdate=regdate, expdate=expdate, rendate=rendate)
-    return render_template('whois.html')
+@app.route("/ip/<report_id>")
+@login_required
+def IPData(report_id):
+    record = mongo.db.reports.find_one({"id": report_id})
+    if record and record.get("status") == "completed":
+        # return render_template("whois.html", data=record["whois"]) 
+        return render_template("ipdata.html", id=report_id, data=record["ipdata"]) 
+
+        # return f"{record['ip']}"
+    return "Report not found or not ready yet."
+
+@app.route("/dns/<report_id>")
+@login_required
+def dns(report_id):
+    record = mongo.db.reports.find_one({"id": report_id})
+    if record and record.get("status") == "completed":
+        # return render_template("whois.html", data=record["whois"]) 
+        return f"{record['dnsrecords']}"
+    return "Report not found or not ready yet."
+
+@app.route("/siteanalysis/<report_id>")
+@login_required
+def siteanalysis(report_id):
+    record = mongo.db.reports.find_one({"id": report_id})
+    if record and record.get("status") == "completed":
+        # return render_template("whois.html", data=record["whois"]) 
+        return f"{record['siteanalysis']}"
+    return "Report not found or not ready yet."
+
+@app.route("/mailserver/<report_id>")
+@login_required
+def mailserver(report_id):
+    record = mongo.db.reports.find_one({"id": report_id})
+    if record and record.get("status") == "completed":
+        # return render_template("whois.html", data=record["whois"]) 
+        return f"{record['mailservers']}"
+    return "Report not found or not ready yet."
+
+@app.route("/metadata/<report_id>")
+@login_required
+def metadata(report_id):
+    record = mongo.db.reports.find_one({"id": report_id})
+    if record and record.get("status") == "completed":
+        # return render_template("whois.html", data=record["whois"]) 
+        return f"{record['metadata']}"
+    return "Report not found or not ready yet."
+
+@app.route("/headers/<report_id>")
+@login_required
+def headers(report_id):
+    record = mongo.db.reports.find_one({"id": report_id})
+    if record and record.get("status") == "completed":
+        # return render_template("whois.html", data=record["whois"]) 
+        return f"{record['headers']}"
+    return "Report not found or not ready yet."
+
+@app.route("/ssl/<report_id>")
+@login_required
+def ssl(report_id):
+    record = mongo.db.reports.find_one({"id": report_id})
+    if record and record.get("status") == "completed":
+        # return render_template("whois.html", data=record["whois"]) 
+        return f"{record['ssl']}"
+    return "Report not found or not ready yet."
+
+@app.route("/openports/<report_id>")
+@login_required
+def openports(report_id):
+    record = mongo.db.reports.find_one({"id": report_id})
+    if record and record.get("status") == "completed":
+        # return render_template("whois.html", data=record["whois"]) 
+        return f"{record['openports']}"
+    return "Report not found or not ready yet."
+
+@app.route("/history")
+@login_required
+def history():
+    history = mongo.db.reports.find({"user": session['email']})
+    return f"{len(list(history))}"
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

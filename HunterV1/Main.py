@@ -1,33 +1,16 @@
 import socket
-import re
-from IPData import GetIPData
-from WhoIsData import GetWhois
-from IPFinder import GetSiteIP
-from DNSData import GetDNSRecords
-from SiteData import GetSiteDataAndHeaders
-from MailServerData import GetMaiServerData
-from MetaData import GetMetaData
-from SocialLinks import ExtractSocialLinks
-from SiteTech import GetSiteTech
-from SiteAnalysis import GetSiteAnalysis
-from PortScanning import GetOpenPorts
-from SSLData import GetSSLData
-
-from pymongo import MongoClient
-import os
-from dotenv import load_dotenv
-from datetime import datetime
-
-load_dotenv()
-
-client = MongoClient("mongodb://HostHunterAdmin:2St7tHxcQJMHMsnDSJsXN7s1PxhnbHCR@161.97.70.226:27017/HostHunter")
-db = client["HostHunter"]  
-
-def ExtractDomain(url):
-    domain = re.sub(r'^https?://', '', url)
-    domain = re.sub(r'^www\.', '', domain)
-    domain = domain.split('/')[0]
-    return domain
+from HunterV1.IPData import GetIPData
+from HunterV1.WhoIsData import GetWhois
+from HunterV1.IPFinder import GetSiteIP
+from HunterV1.DNSData import GetDNSRecords
+from HunterV1.SiteData import GetSiteDataAndHeaders
+from HunterV1.MailServerData import GetMaiServerData
+from HunterV1.MetaData import GetMetaData
+from HunterV1.SocialLinks import ExtractSocialLinks
+from HunterV1.SiteTech import GetSiteTech
+from HunterV1.SiteAnalysis import GetSiteAnalysis
+from HunterV1.PortScanning import GetOpenPorts
+from HunterV1.SSLData import GetSSLData
 
 def DomainCheck(domain):
     try:
@@ -36,8 +19,7 @@ def DomainCheck(domain):
     except socket.gaierror:
         return None
  
-def Main(url):
-    domain = ExtractDomain(url)
+def Main(domain, RandomID, timestamp, mongo):
     ip = DomainCheck(domain)
 
     # IP correlation among list of Censys IP's
@@ -51,7 +33,7 @@ def Main(url):
     ipdata = GetIPData(ip)
     print(ipdata)
 
-    SiteIP = GetSiteIP(url, ip)
+    SiteIP = GetSiteIP(domain, ip)
     print(SiteIP)
 
     whoisdata = GetWhois(domain)
@@ -86,33 +68,33 @@ def Main(url):
     SSLData = GetSSLData(domain)
     print(SSLData)
 
-    # ds = {
-    #     "timestamp": datetime.now().isoformat(),
-    #     "domain": whoisdata["domain"]["url"],
-    #     "whois": whoisdata,
-    #     "ipdata": ipdata,
-    #     "dnsrecords": DNSRecords,
-    #     "headers": Headers,
-    #     "mailservers": {
-    #         IncomingMails,
-    #         OutgoingMails
-    #     },
-        # "siteanalysis": {
+    ds = {
+        "id": RandomID,
+        "timestamp": timestamp,
+        "url": whoisdata["domain"]["url"],
+        "status": "completed",
+        "ip": ip,
+        "whois": whoisdata,
+        "ipdata": ipdata,
+        "dnsrecords": DNSRecords,
+        "mailservers": {
+            "incoming": IncomingMails,
+            "outgoing": OutgoingMails
+        },
+        "ssl": SSLData,
+        "metadata": Metadata,
+        "headers": Headers,
+        "siteanalysis": {
+            "sociallinks": SocialLinks,
+            "sitetech": SiteTech,
+            "summary": SiteAnalysis["summary"],
+            "description": SiteAnalysis["description"],
+            "keywords": SiteAnalysis["keywords"],
+            "category": SiteAnalysis["site_category"],
+        },
+        "openports": OpenPorts,
+    }
 
-        # },
-
-    # print(Metadata)
-    # print(SocialLinks)
-    # print(SiteTech)
-    # print(SiteAnalysis)
-    # print(OpenPorts)
-    # print(SSLData)
-
-
-    # }
-
-    # db.reports.insert_one(ds)
+    mongo.db.reports.update_one({"id": RandomID}, {"$set": ds})
 
     return True
-
-Main("sih.gov.in")

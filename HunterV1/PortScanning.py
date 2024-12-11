@@ -15,6 +15,29 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 DEFAULT_PORTS = [21, 22, 23, 25, 53, 80, 110, 139, 143, 161, 389, 443, 3306, 3389, 5432, 5900, 8080, 6379, 6660, 6667, 9200]
+portdata = {
+  21: "FTP (File Transfer Protocol)",
+  22: "SSH (Secure Shell)",
+  23: "Telnet (Unsecure Remote Access)",
+  25: "SMTP (Simple Mail Transfer Protocol)",
+  53: "DNS (Domain Name System)",
+  80: "HTTP (Web Traffic)",
+  110: "POP3 (Email Retrieval)",
+  139: "NetBIOS (File Sharing over LAN)",
+  143: "IMAP (Email Retrieval with Sync)",
+  161: "SNMP (Network Monitoring)",
+  389: "LDAP (Directory Services)",
+  443: "HTTPS (Secure Web Traffic)",
+  3306: "MySQL (Database)",
+  3389: "RDP (Remote Desktop Protocol)",
+  5432: "PostgreSQL (Database)",
+  5900: "VNC (Remote Desktop)",
+  8080: "HTTP Alternative/Proxy",
+  6379: "Redis (In-Memory Data Store)",
+  6660: "IRC (Internet Relay Chat)",
+  6667: "IRC (Internet Relay Chat)",
+  9200: "Elasticsearch (Search Engine)"
+}
 
 def validate_ip_address(ip: str) -> bool:
     """
@@ -99,12 +122,14 @@ def GetOpenPorts(
     except Exception as e:
         logger.error(f"Error during port scanning: {e}")
     
-    return sorted(open_ports)
+    open_ports = sorted(open_ports)
+    oports = {str(port): portdata[port] for port in open_ports}
 
+    return oports
 
 # target_ip = "161.97.70.226" 
 # open_ports = GetOpenPorts(target_ip)
-
+# print(open_ports)
 # if open_ports:
 #     print("\nOpen Ports:")
 #     for port in open_ports:

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Report</title>
+</head>
+<body>
+    <h1>Generating Report...</h1>
+    <p id="status">Please wait while your report is being generated.</p>
+    <script>
+        const reportId = "{{ report_id }}";
+
+        function checkStatus() {
+            fetch(`/status/${reportId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "completed") {
+                        window.location.href = `/result/${reportId}`;
+                    } else if (data.status === "not_found") {
+                        document.getElementById("status").textContent = "Report not found.";
+                    } else {
+                        setTimeout(checkStatus, 1000);
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        }
+
+        checkStatus();
+    </script>
+</body>
+</html>
