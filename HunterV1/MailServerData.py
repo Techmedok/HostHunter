@@ -4,7 +4,6 @@ import time
 from typing import List, Dict, Tuple
 from requests.exceptions import ConnectionError, Timeout, HTTPError
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -31,16 +30,12 @@ def GetMaiServerData(domain: str, max_retries: int = 2, timeout: int = 10) -> Tu
     
     for attempt in range(max_retries + 1):
         try:            
-            # Make the request with a timeout
             response = requests.get(request_url, timeout=timeout)
             
-            # Raise an exception for bad status codes
             response.raise_for_status()
             
-            # Parse JSON response
             mail_server_data = response.json()
             
-            # Extract incoming mail servers
             incoming_mail_servers = []
             if mail_server_data.get("incomingMail", {}).get("providers"):
                 for provider in mail_server_data["incomingMail"]["providers"]:
@@ -56,7 +51,6 @@ def GetMaiServerData(domain: str, max_retries: int = 2, timeout: int = 10) -> Tu
                     except Exception as parse_error:
                         logger.warning(f"Error parsing incoming mail server entry: {parse_error}")
             
-            # Extract outgoing mail servers
             outgoing_mail_servers = []
             if mail_server_data.get("outgoingMail", {}).get("providers"):
                 for provider in mail_server_data["outgoingMail"]["providers"]:
@@ -104,12 +98,10 @@ def GetMaiServerData(domain: str, max_retries: int = 2, timeout: int = 10) -> Tu
                 logger.error("Max retries reached. Unable to complete request.")
                 raise
         
-        # Wait before retrying
         if attempt < max_retries:
-            wait_time = 2 ** attempt  # Exponential backoff
+            wait_time = 2 ** attempt  
             time.sleep(wait_time)
     
-    # This should never be reached due to the raise statements above
     raise RuntimeError("Unexpected end of retry loop")
 
 

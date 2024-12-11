@@ -22,10 +22,8 @@ def GetSiteDataAndHeaders(
     Returns:
         Optional[Tuple[Dict[str, str], str]]: Tuple of headers and contents, or None if failed
     """
-    # Ensure max_retries is between 0 and 1
     max_retries = min(max(max_retries, 0), 1)
     
-    # Configure logging
     logging.basicConfig(
         level= logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -36,19 +34,15 @@ def GetSiteDataAndHeaders(
     )
     logger = logging.getLogger(__name__)
     
-    # Ensure domain starts with http:// or https://
     if not domain.startswith(('http://', 'https://')):
         domain = f"http://{domain}"
     
-    # Define headers
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
     
-    # Retry loop
     for attempt in range(max_retries + 1):
         try:            
-            # Make the request
             response = requests.get(
                 domain, 
                 headers=headers, 
@@ -56,10 +50,8 @@ def GetSiteDataAndHeaders(
                 verify=False 
             )
             
-            # Raise an exception for bad status codes
             response.raise_for_status()
                         
-            # Return headers and contents
             return dict(response.headers), response.text
         
         except ConnectionError as e:
@@ -68,7 +60,6 @@ def GetSiteDataAndHeaders(
                 logger.critical(f"Failed to connect to {domain} after {max_retries + 1} attempts")
                 return None
             
-            # Wait before retry (exponential backoff)
             wait_time = 2 ** attempt
             time.sleep(wait_time)
         
@@ -78,7 +69,6 @@ def GetSiteDataAndHeaders(
                 logger.critical(f"Request to {domain} timed out after {max_retries + 1} attempts")
                 return None
             
-            # Wait before retry
             wait_time = 2 ** attempt
             time.sleep(wait_time)
         
@@ -88,7 +78,6 @@ def GetSiteDataAndHeaders(
                 logger.critical(f"Request to {domain} failed after {max_retries + 1} attempts")
                 return None
             
-            # Wait before retry
             wait_time = 2 ** attempt
             time.sleep(wait_time)
         

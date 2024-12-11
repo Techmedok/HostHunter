@@ -57,10 +57,8 @@ def GetSiteIP(
     """
     logger.setLevel(logging.DEBUG if verbose else logging.INFO)
     
-    # Construct Censys search endpoint
     endpoint = f"https://search.censys.io/_search?resource=hosts&sort=RELEVANCE&per_page=25&virtual_hosts=EXCLUDE&q={url}"
     
-    # Attempt to load cookies
     try:
         with open(cookies_path, "r") as file:
             cookies_data = json.load(file)
@@ -68,11 +66,9 @@ def GetSiteIP(
         logger.error(f"Error loading cookies: {e}")
         return [obtip]
     
-    # Retry mechanism
     for attempt in range(max_retries + 1):
         try:
             with playwright.sync_api.sync_playwright() as p:
-                # Launch browser with added stability options
                 browser = p.firefox.launch(
                     headless=True,
                     args=[
@@ -82,7 +78,6 @@ def GetSiteIP(
                     ]
                 )
                 
-                # Create browser context with cookies
                 context = browser.new_context()
                 context.add_cookies([
                     {
@@ -95,42 +90,35 @@ def GetSiteIP(
                 
                 page = context.new_page()
                 
-                # Navigate to page with timeout and error handling
                 try:
                     page.goto(endpoint, 
                         wait_until='networkidle', 
-                        timeout=30000  # 30 seconds timeout
+                        timeout=30000  
                     )
                 except playwright.sync_api.TimeoutError:
                     logger.warning(f"Timeout on page load (Attempt {attempt + 1})")
                     if attempt == max_retries:
                         return [obtip]
-                    time.sleep(2)  # Wait before retry
+                    time.sleep(2)  
                     continue
                 
-                # Extract page content
                 html_content = page.content()
                 
-                # Parse with BeautifulSoup
                 soup = BeautifulSoup(html_content, "html.parser")
                 
-                # Find search results
                 results = soup.find_all("div", class_="SearchResult result")
                 
-                # Extract titles
                 titles = [
                     result.find("a", class_="SearchResult__title-text").get_text(strip=True)
                     for result in results
                     if result.find("a", class_="SearchResult__title-text")
                 ]
                 
-                # Extract IP addresses
                 addresses = [
                     ip for title in titles 
                     if (ip := ip_extract(title)) is not None
                 ]
                 
-                # Use fallback IP if no addresses found
                 if not addresses:
                     addresses = [obtip]
                 
@@ -142,8 +130,6 @@ def GetSiteIP(
                 logger.error("Max retries reached. Returning fallback IP.")
                 return [obtip]
             
-            # Wait before retry
             time.sleep(2)
     
-    # Fallback return (should not reach here)
     return [obtip]

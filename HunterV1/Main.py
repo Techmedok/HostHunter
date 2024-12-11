@@ -13,6 +13,16 @@ from SiteAnalysis import GetSiteAnalysis
 from PortScanning import GetOpenPorts
 from SSLData import GetSSLData
 
+from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
+from datetime import datetime
+
+load_dotenv()
+
+client = MongoClient("mongodb://HostHunterAdmin:2St7tHxcQJMHMsnDSJsXN7s1PxhnbHCR@161.97.70.226:27017/HostHunter")
+db = client["HostHunter"]  
+
 def ExtractDomain(url):
     domain = re.sub(r'^https?://', '', url)
     domain = re.sub(r'^www\.', '', domain)
@@ -30,6 +40,8 @@ def Main(url):
     domain = ExtractDomain(url)
     ip = DomainCheck(domain)
 
+    # IP correlation among list of Censys IP's
+
     print(domain)
     print(ip)
 
@@ -39,11 +51,11 @@ def Main(url):
     ipdata = GetIPData(ip)
     print(ipdata)
 
-    whoisdata = GetWhois(domain)
-    print(whoisdata)
-
     SiteIP = GetSiteIP(url, ip)
     print(SiteIP)
+
+    whoisdata = GetWhois(domain)
+    print(whoisdata)
 
     DNSRecords = GetDNSRecords(domain)
     print(DNSRecords)
@@ -73,6 +85,33 @@ def Main(url):
 
     SSLData = GetSSLData(domain)
     print(SSLData)
+
+    # ds = {
+    #     "timestamp": datetime.now().isoformat(),
+    #     "domain": whoisdata["domain"]["url"],
+    #     "whois": whoisdata,
+    #     "ipdata": ipdata,
+    #     "dnsrecords": DNSRecords,
+    #     "headers": Headers,
+    #     "mailservers": {
+    #         IncomingMails,
+    #         OutgoingMails
+    #     },
+        # "siteanalysis": {
+
+        # },
+
+    # print(Metadata)
+    # print(SocialLinks)
+    # print(SiteTech)
+    # print(SiteAnalysis)
+    # print(OpenPorts)
+    # print(SSLData)
+
+
+    # }
+
+    # db.reports.insert_one(ds)
 
     return True
 

@@ -29,7 +29,6 @@ def GetIPData(ip, max_retries=2, retry_delay=1):
 
     logger = logging.getLogger(__name__)
 
-    # Validate IP address format
     try:
         ipaddress.ip_address(ip)
     except ValueError:
@@ -40,34 +39,28 @@ def GetIPData(ip, max_retries=2, retry_delay=1):
         try:
             requesturl = f"http://ip-api.com/json/{ip}"
             
-            # Send request with error handling
             try:
                 response = requests.get(requesturl, timeout=10)
                 response.raise_for_status()
             except requests.RequestException as e:
                 logger.error(f"Network error during IP lookup (Attempt {attempt + 1}/{max_retries + 1}): {e}")
                 
-                # If this is the last attempt, return empty dictionary
                 if attempt == max_retries:
                     return {}
                 
-                # Wait before retrying
                 time.sleep(retry_delay)
                 continue
 
-            # Parse JSON response
             try:
                 ipdata = response.json()
             except ValueError:
                 logger.error("Failed to parse JSON response")
                 return {}
 
-            # Check API response status
             if ipdata.get("status") != "success":
                 logger.warning(f"IP lookup failed: {ipdata.get('message', 'Unknown error')}")
                 return {}
 
-            # Extract IP details
             ipdetails = {
                 'country': ipdata.get("country", "N/A"),
                 'countrycode': ipdata.get("countryCode", "N/A"),
@@ -83,7 +76,6 @@ def GetIPData(ip, max_retries=2, retry_delay=1):
                 'query': ipdata.get("query", ip)
             }
 
-            # Convert latitude and longitude to float
             try:
                 ipdetails['lat'] = float(ipdetails['lat']) if ipdetails['lat'] is not None else None
                 ipdetails['lon'] = float(ipdetails['lon']) if ipdetails['lon'] is not None else None
@@ -97,12 +89,9 @@ def GetIPData(ip, max_retries=2, retry_delay=1):
         except Exception as e:
             logger.error(f"Unexpected error in IP data retrieval (Attempt {attempt + 1}/{max_retries + 1}): {e}")
             
-            # If this is the last attempt, return empty dictionary
             if attempt == max_retries:
                 return {}
             
-            # Wait before retrying
             time.sleep(retry_delay)
 
-    # This line should never be reached, but included for completeness
     return {}

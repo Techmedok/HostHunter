@@ -27,7 +27,6 @@ def GetWhois(domain, max_retries=2, retry_delay=1):
     )
     logger = logging.getLogger(__name__)
 
-    # Validate domain input
     if not domain or not isinstance(domain, str):
         logger.error(f"Invalid domain input: {domain}")
         return {
@@ -40,17 +39,14 @@ def GetWhois(domain, max_retries=2, retry_delay=1):
 
     for attempt in range(max_retries + 1):
         try:
-            # Construct request URL
             requesturl = f"https://who-dat.as93.net/{domain}"
             
-            # Send request with error handling
             try:
                 response = requests.get(requesturl, timeout=10)
                 response.raise_for_status()
             except requests.RequestException as e:
                 logger.error(f"Network error during WHOIS lookup (Attempt {attempt + 1}/{max_retries + 1}): {e}")
                 
-                # If this is the last attempt, return empty dictionaries
                 if attempt == max_retries:
                     return {
                         'domain': {},
@@ -60,11 +56,9 @@ def GetWhois(domain, max_retries=2, retry_delay=1):
                         'technical': {}
                     }
                 
-                # Wait before retrying
                 time.sleep(retry_delay)
                 continue
             
-            # Parse JSON response
             try:
                 whoisdata = response.json()
             except ValueError:
@@ -77,7 +71,6 @@ def GetWhois(domain, max_retries=2, retry_delay=1):
                     'technical': {}
                 }
             
-            # Safe nested dictionary value retrieval
             def safe_get(dictionary, *keys, default=None):
                 for key in keys:
                     try:
@@ -86,7 +79,6 @@ def GetWhois(domain, max_retries=2, retry_delay=1):
                         return default
                 return dictionary or default
             
-            # Comprehensive WHOIS data extraction
             whois_result = {
                 'domain': {
                     "url": safe_get(whoisdata, "domain", "domain", default=""),
@@ -145,7 +137,6 @@ def GetWhois(domain, max_retries=2, retry_delay=1):
         except Exception as e:
             logger.error(f"Unexpected error in WHOIS data retrieval (Attempt {attempt + 1}/{max_retries + 1}): {e}")
             
-            # If this is the last attempt, return empty dictionaries
             if attempt == max_retries:
                 return {
                     'domain': {},
@@ -155,10 +146,8 @@ def GetWhois(domain, max_retries=2, retry_delay=1):
                     'technical': {}
                 }
             
-            # Wait before retrying
             time.sleep(retry_delay)
 
-    # This line should never be reached, but included for completeness
     return {
         'domain': {},
         'registrar': {},

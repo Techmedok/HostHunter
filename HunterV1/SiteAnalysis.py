@@ -23,9 +23,10 @@ def GetSiteAnalysis(content):
                 "role": "user",
                 "content": f"""
                                 I need the following data in JSON format:
-                                    summary (Paragraphs appended in String),
-                                    keywords (array),
-                                    site category (String)
+                                    summary (Paragraphs appended in String. Summary of the Site),
+                                    description (Paragraphs appended in String. Description of the Site),
+                                    keywords (array. Keywords of Site),
+                                    site_category (String. Category of Site)
                                 I dont need any other data other than this in your output.
                                 Site Contents:
                                 {text}

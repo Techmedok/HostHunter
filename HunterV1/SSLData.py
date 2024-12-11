@@ -29,19 +29,15 @@ def GetSSLData(hostname, port=443):
     """
     ssl_details = {}
     try:
-        # Using socket and ssl modules
         context = ssl.create_default_context()
         context.check_hostname = True
         context.verify_mode = ssl.CERT_REQUIRED
         with socket.create_connection((hostname, port), timeout=10) as sock:
             with context.wrap_socket(sock, server_hostname=hostname) as secure_sock:
-                # Basic socket-level SSL details
                 ssl_details['socket_ssl_version'] = secure_sock.version()
                 ssl_details['cipher'] = list(secure_sock.cipher())
-                # Peer certificate
                 cert = secure_sock.getpeercert(binary_form=True)
                 x509_cert = x509.load_der_x509_certificate(cert, default_backend())
-                # Certificate details
                 ssl_details.update({
                     'subject': {attr.oid._name: str(attr.value) for attr in x509_cert.subject},
                     'issuer': {attr.oid._name: str(attr.value) for attr in x509_cert.issuer},
@@ -49,17 +45,15 @@ def GetSSLData(hostname, port=443):
                     'not_valid_before': x509_cert.not_valid_before_utc.isoformat(),
                     'not_valid_after': x509_cert.not_valid_after_utc.isoformat(),
                     'signature_algorithm': x509_cert.signature_algorithm_oid._name,
-                    'version': str(x509_cert.version)  # Convert the Version to a string
+                    'version': str(x509_cert.version)  
                 })
                 
-                # Extract the public key and convert to PEM format
                 public_key = x509_cert.public_key()
                 pem_public_key = public_key.public_bytes(
                     encoding=serialization.Encoding.PEM,
                     format=serialization.PublicFormat.SubjectPublicKeyInfo
                 ).decode('utf-8')
 
-                # Optionally, you can strip the "-----BEGIN PUBLIC KEY-----" and "-----END PUBLIC KEY-----" to get the raw key part
                 raw_public_key_str = pem_public_key.replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").strip()
 
                 ssl_details['public_key'] = str(x509_cert.public_key().public_numbers())
@@ -74,13 +68,11 @@ def GetSSLData(hostname, port=443):
         }
 
     try:
-        # Using requests module for additional information
         with requests.Session() as session:
-            session.verify = False  # Disable verification for testing purposes
-            disable_warnings(InsecureRequestWarning)  # Suppress warning
+            session.verify = False 
+            disable_warnings(InsecureRequestWarning) 
             response = session.get(f'https://{hostname}', timeout=10)
             ssl_details['requests_status_code'] = response.status_code
-            # Connection details if available
             if hasattr(response, 'raw') and hasattr(response.raw, 'connection'):
                 connection = response.raw.connection
                 if hasattr(connection, 'sock') and connection.sock:

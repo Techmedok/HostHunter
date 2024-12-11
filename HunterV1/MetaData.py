@@ -1,15 +1,12 @@
 import logging
 from bs4 import BeautifulSoup
 
-# Setup logging
 logging.basicConfig(filename='app.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def GetMetaData(contents):
     try:
-        # Parse the HTML content with BeautifulSoup
         soup = BeautifulSoup(contents, 'html.parser')
 
-        # Extract metadata
         metadata = {
             "title": soup.title.string if soup.title else "No title",
             "description": soup.find("meta", attrs={"name": "description"}).get("content", "No description") 
@@ -30,11 +27,9 @@ def GetMetaData(contents):
             "language": soup.html.get("lang", "No language") if soup.html else "No language",
         }
 
-        # Extract Open Graph metadata
         og_tags = soup.find_all("meta", attrs={"property": lambda x: x and x.startswith("og:")})
         metadata["open_graph"] = {tag["property"]: tag["content"] for tag in og_tags if "content" in tag.attrs}
 
-        # Extract Twitter metadata
         twitter_tags = soup.find_all("meta", attrs={"name": lambda x: x and x.startswith("twitter:")})
         metadata["twitter"] = {tag["name"]: tag["content"] for tag in twitter_tags if "content" in tag.attrs}
 

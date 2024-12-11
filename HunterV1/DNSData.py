@@ -5,7 +5,6 @@ import concurrent.futures
 from typing import Dict, List, Optional, Union
 from functools import lru_cache
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -16,7 +15,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Global resolver configuration
 resolver = dns.resolver.Resolver()
 resolver.timeout = 3
 resolver.lifetime = 5
@@ -147,7 +145,6 @@ def GetDNSRecords(domain: str) -> Dict[str, Optional[List[Dict[str, Union[str, i
     :param domain: Domain to retrieve DNS records for
     :return: Dictionary of DNS records by record type
     """
-    # Record types to resolve
     record_types = {
         'A': _resolve_standard,
         'AAAA': _resolve_standard,
@@ -159,11 +156,9 @@ def GetDNSRecords(domain: str) -> Dict[str, Optional[List[Dict[str, Union[str, i
         'SOA': _resolve_soa
     }
     
-    # Use concurrent execution to speed up record retrieval
     results: Dict[str, Optional[List[Dict[str, Union[str, int]]]]] = {}
     
     with concurrent.futures.ThreadPoolExecutor(max_workers=len(record_types)) as executor:
-        # Create a dictionary to map futures to record types
         future_to_record_type = {
             executor.submit(resolver_func, domain, record_type, resolver): record_type
             for record_type, resolver_func in record_types.items()
@@ -177,7 +172,6 @@ def GetDNSRecords(domain: str) -> Dict[str, Optional[List[Dict[str, Union[str, i
                 logger.error(f"Error processing {record_type} records: {e}")
                 results[record_type] = None
     
-    # Add PTR record separately as it uses a different resolution method
     results['PTR'] = _get_ptr_record(domain)
     
     return results
