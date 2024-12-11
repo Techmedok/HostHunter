@@ -201,7 +201,6 @@ def WhoisData(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
         return render_template("whois.html", id=report_id, data=record["whois"]) 
-        # return f"{record['whois']}"
     return "Report not found or not ready yet."
 
 @app.route("/ip/<report_id>")
@@ -209,10 +208,7 @@ def WhoisData(report_id):
 def IPData(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
-        # return render_template("whois.html", data=record["whois"]) 
         return render_template("ipdata.html", id=report_id, data=record["ipdata"]) 
-
-        # return f"{record['ip']}"
     return "Report not found or not ready yet."
 
 @app.route("/dns/<report_id>")
@@ -247,8 +243,7 @@ def mailserver(report_id):
 def metadata(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
-        # return render_template("whois.html", data=record["whois"]) 
-        return f"{record['metadata']}"
+        return render_template("metadata.html", id=report_id, data=record["metadata"]) 
     return "Report not found or not ready yet."
 
 @app.route("/headers/<report_id>")
@@ -274,8 +269,7 @@ def ssl(report_id):
 def openports(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
-        # return render_template("whois.html", data=record["whois"]) 
-        return f"{record['openports']}"
+        return render_template("openports.html", id=report_id, data=record["openports"]) 
     return "Report not found or not ready yet."
 
 @app.route("/history")
