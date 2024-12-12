@@ -73,21 +73,19 @@
             Summary
             </span>
          </a>
-         <!--WHOIS-->
-         <a href="{{ url_for('WhoisData', report_id = id) }}" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
-            <span class="absolute left-0 h-full w-1.5 rounded-full bg-gradient-to-b animate-pulse" 
-               style="background-image: linear-gradient(to bottom, #3b82f6, #1d4ed8)"></span>
-            <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gradient-to-r from-blue-500 to-blue-700">
-               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white lucide lucide-globe">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="2" x2="22" y1="12" y2="12"></line>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-               </svg>
-            </div>
-            <span class="font-medium text-transparent transition-colors duration-300 bg-clip-text bg-gradient-to-r from-blue-500 to-blue-700">
-            WHOIS
-            </span>
-         </a>
+         <!-- WHOIS -->
+<a href="{{ url_for('WhoisData', report_id = id) }}" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
+   <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gray-100/50">
+       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 lucide lucide-globe group-hover:text-blue-600">
+           <circle cx="12" cy="12" r="10"></circle>
+           <line x1="2" x2="22" y1="12" y2="12"></line>
+           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z"></path>
+       </svg>
+   </div>
+   <span class="font-medium text-gray-700 transition-colors duration-300 group-hover:text-blue-700">
+       WHOIS
+   </span>
+</a>
          <!-- IP Data -->
          <a href="{{ url_for('IPData', report_id = id) }}" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
             <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gray-100/50">
@@ -128,17 +126,20 @@
             </span>
          </a>
          <!-- SSL Check -->
-         <a href="{{ url_for('ssl', report_id = id) }}" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
-            <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gray-100/50">
-               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 lucide lucide-lock group-hover:text-blue-600">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-               </svg>
-            </div>
-            <span class="font-medium text-gray-700 transition-colors duration-300 group-hover:text-blue-700">
-            SSL Check
-            </span>
-         </a>
+<a href="{{ url_for('ssl', report_id = id) }}" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
+   <span class="absolute left-0 h-full w-1.5 rounded-full bg-gradient-to-b animate-pulse" 
+         style="background-image: linear-gradient(to bottom, #3b82f6, #1d4ed8)"></span>
+   <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gradient-to-r from-blue-500 to-blue-700">
+       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white lucide lucide-lock">
+           <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+           <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+       </svg>
+   </div>
+   <span class="font-medium text-transparent transition-colors duration-300 bg-clip-text bg-gradient-to-r from-blue-500 to-blue-700">
+       SSL Check
+   </span>
+</a>
+
          <!-- Metadata -->
          <a href="{{ url_for('metadata', report_id = id) }}" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
             <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gray-100/50">
@@ -204,19 +205,7 @@
             Open Ports
             </span>
          </a>
-         <!-- Vulnerabilities -->
-         <a href="" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
-            <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gray-100/50">
-               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 lucide lucide-alert-triangle group-hover:text-blue-600">
-                  <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
-                  <path d="M12 9v4"></path>
-                  <path d="M12 17h.01"></path>
-               </svg>
-            </div>
-            <span class="font-medium text-gray-700 transition-colors duration-300 group-hover:text-blue-700">
-            Vulnerabilities
-            </span>
-         </a>
+        
          <!-- Contact Details -->
          <a href="" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
             <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gray-100/50">
@@ -244,284 +233,287 @@
                </button>
             </div>
          </div>
-         <div class="p-8 transition-all duration-500 transform border shadow-2xl bg-white/20 backdrop-blur-xl rounded-3xl border-white/20 hover:border-blue-100/50 hover:shadow-4xl hover:-translate-y-2">
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-               <div class="space-y-4">
-                  <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                     <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500 lucide lucide-shield-half">
-                           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
+         {% if data is not none %}
+            <div class="p-8 transition-all duration-500 transform border shadow-2xl bg-white/20 backdrop-blur-xl rounded-3xl border-white/20 hover:border-blue-100/50 hover:shadow-4xl hover:-translate-y-2">
+               <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <div class="space-y-4">
+                     <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                        <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500 lucide lucide-shield-half">
+                              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                           </svg>
+                        </div>
+                        <div>
+                           <span class="block mb-1 text-sm text-gray-600">Hostname</span>
+                           <span class="font-medium text-gray-800">{{data["hostname"]}}</span>
+                        </div>
                      </div>
-                     <div>
-                        <span class="block mb-1 text-sm text-gray-600">Hostname</span>
-                        <span class="font-medium text-gray-800">{{data["hostname"]}}</span>
+                     <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                        <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-500 lucide lucide-lock-keyhole">
+                              <path d="M2 16V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z"></path>
+                              <circle cx="12" cy="12" r="3"></circle>
+                           </svg>
+                        </div>
+                        <div>
+                           <span class="block mb-1 text-sm text-gray-600">Organization Name</span>
+                           <span class="font-medium text-gray-800">{{data["issuer"]["organizationName"]}}</span>
+                        </div>
+                     </div>
+                     <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                        <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 lucide lucide-flag">
+                              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                              <line x1="4" x2="4" y1="22" y2="15"></line>
+                           </svg>
+                        </div>
+                        <div>
+                           <span class="block mb-1 text-sm text-gray-600">Has SSL?</span>
+                           <span class="font-medium text-gray-800">{{data["has_ssl"]}}</span>
+                        </div>
+                     </div>
+                     <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                        <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-600 lucide lucide-building">
+                              <rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect>
+                              <path d="M9 22v-4h6v4"></path>
+                              <path d="M8 6h.01"></path>
+                              <path d="M16 6h.01"></path>
+                              <path d="M12 6h.01"></path>
+                              <path d="M12 10h.01"></path>
+                              <path d="M12 14h.01"></path>
+                              <path d="M16 10h.01"></path>
+                              <path d="M16 14h.01"></path>
+                              <path d="M8 10h.01"></path>
+                              <path d="M8 14h.01"></path>
+                           </svg>
+                        </div>
+                        <div>
+                           <span class="block mb-1 text-sm text-gray-600">Is Valid?</span>
+                           <span class="font-medium text-gray-800">{{data["is_valid"]}}</span>
+                        </div>
                      </div>
                   </div>
-                  <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                     <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-500 lucide lucide-lock-keyhole">
-                           <path d="M2 16V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z"></path>
-                           <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
+                  <div class="space-y-4">
+                     <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                        <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700 lucide lucide-file-text">
+                              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                              <polyline points="14 2 14 8 20 8"></polyline>
+                              <line x1="16" x2="8" y1="13" y2="13"></line>
+                              <line x1="16" x2="8" y1="17" y2="17"></line>
+                              <line x1="10" x2="8" y1="9" y2="9"></line>
+                           </svg>
+                        </div>
+                        <div>
+                           <span class="block mb-1 text-sm text-gray-600">Port</span>
+                           <span class="font-medium text-gray-800">{{data["port"]}}</span>
+                        </div>
                      </div>
-                     <div>
-                        <span class="block mb-1 text-sm text-gray-600">Organization Name</span>
-                        <span class="font-medium text-gray-800">{{data["issuer"]["organizationName"]}}</span>
+                     <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                        <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-700 lucide lucide-barcode">
+                              <path d="M3 5v14"></path>
+                              <path d="M8 5v14"></path>
+                              <path d="M12 5v14"></path>
+                              <path d="M17 5v14"></path>
+                              <path d="M21 5v14"></path>
+                           </svg>
+                        </div>
+                        <div>
+                           <span class="block mb-1 text-sm text-gray-600">Country Name</span>
+                           <span class="font-medium text-gray-800">{{data["issuer"]["countryName"]}}</span>
+                        </div>
                      </div>
-                  </div>
-                  <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                     <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 lucide lucide-flag">
-                           <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
-                           <line x1="4" x2="4" y1="22" y2="15"></line>
-                        </svg>
+                     <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                        <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-800 lucide lucide-calendar-clock">
+                              <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"></path>
+                              <path d="M16 2v4"></path>
+                              <path d="M8 2v4"></path>
+                              <path d="M3.5 8.5h17"></path>
+                              <path d="M18 16.5a2.5 2.5 0 1 1-2.5-2.5c.57 0 1.08.23 1.47.6"></path>
+                              <path d="M16.5 18.5l1 1 2.5-2.5"></path>
+                           </svg>
+                        </div>
+                        <div>
+                           <span class="block mb-1 text-sm text-gray-600">SSL Version</span>
+                           <span class="font-medium text-gray-800">{{data["ssl_version"]}}</span>
+                        </div>
                      </div>
-                     <div>
-                        <span class="block mb-1 text-sm text-gray-600">Has SSL?</span>
-                        <span class="font-medium text-gray-800">{{data["has_ssl"]}}</span>
-                     </div>
-                  </div>
-                  <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                     <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-600 lucide lucide-building">
-                           <rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect>
-                           <path d="M9 22v-4h6v4"></path>
-                           <path d="M8 6h.01"></path>
-                           <path d="M16 6h.01"></path>
-                           <path d="M12 6h.01"></path>
-                           <path d="M12 10h.01"></path>
-                           <path d="M12 14h.01"></path>
-                           <path d="M16 10h.01"></path>
-                           <path d="M16 14h.01"></path>
-                           <path d="M8 10h.01"></path>
-                           <path d="M8 14h.01"></path>
-                        </svg>
-                     </div>
-                     <div>
-                        <span class="block mb-1 text-sm text-gray-600">Is Valid?</span>
-                        <span class="font-medium text-gray-800">{{data["is_valid"]}}</span>
+                     <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                        <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-800 lucide lucide-calendar-x">
+                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                              <line x1="16" x2="8" y1="2" y2="2"></line>
+                              <line x1="10" x2="14" y1="14" y2="10"></line>
+                              <line x1="10" x2="14" y1="10" y2="14"></line>
+                           </svg>
+                        </div>
+                        <div>
+                           <span class="block mb-1 text-sm text-gray-600">Days Remaining</span>
+                           <span class="font-medium text-gray-800">{{data["days_remaining"]}} days</span>
+                        </div>
                      </div>
                   </div>
                </div>
-               <div class="space-y-4">
+               <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
                      <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700 lucide lucide-file-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-scroll">
+                           <path d="M10 17v2a2 2 0 1 1-4 0v-1a2 2 0 0 0-2-2H2"></path>
+                           <path d="M12 15v6"></path>
+                           <path d="M19.5 3.5a2.8 2.8 0 0 0-4 0l-7 7a2.8 2.8 0 0 0 4 4l7-7a2.8 2.8 0 1 0-4-4"></path>
+                           <path d="m11 7 4 4"></path>
+                           <path d="M19 13l-4-4"></path>
+                        </svg>
+                     </div>
+                     <div>
+                        <span class="block mb-1 text-sm text-gray-600">Not Valid Before</span>
+                        <span class="font-medium text-gray-800">{{data["not_valid_before"]}}</span>
+                     </div>
+                  </div>
+                  <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                     <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-layers">
+                           <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                           <polyline points="2 17 12 22 22 17"></polyline>
+                           <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                     </div>
+                     <div>
+                        <span class="block mb-1 text-sm text-gray-600">Not Valid After</span>
+                        <span class="font-medium text-gray-800">{{data["not_valid_after"]}}</span>
+                     </div>
+                  </div>
+                  <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                     <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-key">
+                           <path d="M10 2h4v4h-4z"></path>
+                           <path d="m7 7 3-3 3 3"></path>
+                           <path d="M13 10V7l-3-3-3 3v3h9z"></path>
+                           <rect width="20" height="8" x="2" y="14" rx="2"></rect>
+                           <path d="M6 18h.01"></path>
+                           <path d="M10 18h.01"></path>
+                           <path d="M14 18h.01"></path>
+                        </svg>
+                     </div>
+                     <div>
+                        <span class="block mb-1 text-sm text-gray-600">Version</span>
+                        <span class="font-medium text-gray-800">{{data["version"]}}</span>
+                     </div>
+                  </div>
+                  <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                     <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-file-code">
                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
                            <polyline points="14 2 14 8 20 8"></polyline>
-                           <line x1="16" x2="8" y1="13" y2="13"></line>
-                           <line x1="16" x2="8" y1="17" y2="17"></line>
-                           <line x1="10" x2="8" y1="9" y2="9"></line>
+                           <path d="m10 13-2 2 2 2"></path>
+                           <path d="m14 17 2-2-2-2"></path>
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">Port</span>
-                        <span class="font-medium text-gray-800">{{data["port"]}}</span>
+                        <span class="block mb-1 text-sm text-gray-600">Cipher</span>
+                        <span class="font-medium text-gray-800">{{data["cipher"]}}</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                     <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-scroll">
+                           <path d="M10 17v2a2 2 0 1 1-4 0v-1a2 2 0 0 0-2-2H2"></path>
+                           <path d="M12 15v6"></path>
+                           <path d="M19.5 3.5a2.8 2.8 0 0 0-4 0l-7 7a2.8 2.8 0 0 0 4 4l7-7a2.8 2.8 0 1 0-4-4"></path>
+                           <path d="m11 7 4 4"></path>
+                           <path d="M19 13l-4-4"></path>
+                        </svg>
+                     </div>
+                     <div>
+                        <span class="block mb-1 text-sm text-gray-600">Public Key Type</span>
+                        <span class="font-medium text-gray-800">{{data["public_key_type"]}}</span>
                      </div>
                   </div>
                   <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
                      <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-700 lucide lucide-barcode">
-                           <path d="M3 5v14"></path>
-                           <path d="M8 5v14"></path>
-                           <path d="M12 5v14"></path>
-                           <path d="M17 5v14"></path>
-                           <path d="M21 5v14"></path>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-layers">
+                           <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                           <polyline points="2 17 12 22 22 17"></polyline>
+                           <polyline points="2 12 12 17 22 12"></polyline>
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">Country Name</span>
-                        <span class="font-medium text-gray-800">{{data["issuer"]["countryName"]}}</span>
+                        <span class="block mb-1 text-sm text-gray-600">Public Key Bits</span>
+                        <span class="font-medium text-gray-800">{{data["public_key_bits"]}}</span>
                      </div>
                   </div>
                   <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
                      <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-800 lucide lucide-calendar-clock">
-                           <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"></path>
-                           <path d="M16 2v4"></path>
-                           <path d="M8 2v4"></path>
-                           <path d="M3.5 8.5h17"></path>
-                           <path d="M18 16.5a2.5 2.5 0 1 1-2.5-2.5c.57 0 1.08.23 1.47.6"></path>
-                           <path d="M16.5 18.5l1 1 2.5-2.5"></path>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-key">
+                           <path d="M10 2h4v4h-4z"></path>
+                           <path d="m7 7 3-3 3 3"></path>
+                           <path d="M13 10V7l-3-3-3 3v3h9z"></path>
+                           <rect width="20" height="8" x="2" y="14" rx="2"></rect>
+                           <path d="M6 18h.01"></path>
+                           <path d="M10 18h.01"></path>
+                           <path d="M14 18h.01"></path>
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">SSL Version</span>
-                        <span class="font-medium text-gray-800">{{data["ssl_version"]}}</span>
+                        <span class="block mb-1 text-sm text-gray-600">Signature Algorithm</span>
+                        <span class="font-medium text-gray-800">{{data["signature_algorithm"]}}</span>
                      </div>
                   </div>
                   <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
                      <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-800 lucide lucide-calendar-x">
-                           <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                           <line x1="16" x2="8" y1="2" y2="2"></line>
-                           <line x1="10" x2="14" y1="14" y2="10"></line>
-                           <line x1="10" x2="14" y1="10" y2="14"></line>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-file-code">
+                           <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                           <polyline points="14 2 14 8 20 8"></polyline>
+                           <path d="m10 13-2 2 2 2"></path>
+                           <path d="m14 17 2-2-2-2"></path>
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">Days Remaining</span>
-                        <span class="font-medium text-gray-800">{{data["days_remaining"]}} days</span>
+                        <span class="block mb-1 text-sm text-gray-600">Common Name</span>
+                        <span class="font-medium text-gray-800">{{data["issuer"]["commonName"]}}</span>
                      </div>
                   </div>
                </div>
-            </div>
-            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-scroll">
-                        <path d="M10 17v2a2 2 0 1 1-4 0v-1a2 2 0 0 0-2-2H2"></path>
-                        <path d="M12 15v6"></path>
-                        <path d="M19.5 3.5a2.8 2.8 0 0 0-4 0l-7 7a2.8 2.8 0 0 0 4 4l7-7a2.8 2.8 0 1 0-4-4"></path>
-                        <path d="m11 7 4 4"></path>
-                        <path d="M19 13l-4-4"></path>
-                     </svg>
+               <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                     <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-scroll">
+                           <path d="M10 17v2a2 2 0 1 1-4 0v-1a2 2 0 0 0-2-2H2"></path>
+                           <path d="M12 15v6"></path>
+                           <path d="M19.5 3.5a2.8 2.8 0 0 0-4 0l-7 7a2.8 2.8 0 0 0 4 4l7-7a2.8 2.8 0 1 0-4-4"></path>
+                           <path d="m11 7 4 4"></path>
+                           <path d="M19 13l-4-4"></path>
+                        </svg>
+                     </div>
+                     <div>
+                        <span class="block mb-1 text-sm text-gray-600">Serial Number</span>
+                        <span class="font-medium text-gray-800">{{data["serial_number"]}}</span>
+                     </div>
+                  </div><br>
+                  <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                     <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-layers">
+                           <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                           <polyline points="2 17 12 22 22 17"></polyline>
+                           <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                     </div>
+                     <div>
+                        <span class="block mb-1 text-sm text-gray-600">Public Key PEM</span>
+                        <span class="font-medium text-gray-800">{{data["public_key_pem"]}}</span>
+                     </div>
                   </div>
-                  <div>
-                     <span class="block mb-1 text-sm text-gray-600">Not Valid Before</span>
-                     <span class="font-medium text-gray-800">{{data["not_valid_before"]}}</span>
-                  </div>
-               </div>
-               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-layers">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                        <polyline points="2 17 12 22 22 17"></polyline>
-                        <polyline points="2 12 12 17 22 12"></polyline>
-                     </svg>
-                  </div>
-                  <div>
-                     <span class="block mb-1 text-sm text-gray-600">Not Valid After</span>
-                     <span class="font-medium text-gray-800">{{data["not_valid_after"]}}</span>
-                  </div>
-               </div>
-               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-key">
-                        <path d="M10 2h4v4h-4z"></path>
-                        <path d="m7 7 3-3 3 3"></path>
-                        <path d="M13 10V7l-3-3-3 3v3h9z"></path>
-                        <rect width="20" height="8" x="2" y="14" rx="2"></rect>
-                        <path d="M6 18h.01"></path>
-                        <path d="M10 18h.01"></path>
-                        <path d="M14 18h.01"></path>
-                     </svg>
-                  </div>
-                  <div>
-                     <span class="block mb-1 text-sm text-gray-600">Version</span>
-                     <span class="font-medium text-gray-800">{{data["version"]}}</span>
-                  </div>
-               </div>
-               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-file-code">
-                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <path d="m10 13-2 2 2 2"></path>
-                        <path d="m14 17 2-2-2-2"></path>
-                     </svg>
-                  </div>
-                  <div>
-                     <span class="block mb-1 text-sm text-gray-600">Cipher</span>
-                     <span class="font-medium text-gray-800">{{data["cipher"]}}</span>
-                  </div>
-               </div>
-            </div>
-            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-scroll">
-                        <path d="M10 17v2a2 2 0 1 1-4 0v-1a2 2 0 0 0-2-2H2"></path>
-                        <path d="M12 15v6"></path>
-                        <path d="M19.5 3.5a2.8 2.8 0 0 0-4 0l-7 7a2.8 2.8 0 0 0 4 4l7-7a2.8 2.8 0 1 0-4-4"></path>
-                        <path d="m11 7 4 4"></path>
-                        <path d="M19 13l-4-4"></path>
-                     </svg>
-                  </div>
-                  <div>
-                     <span class="block mb-1 text-sm text-gray-600">Public Key Type</span>
-                     <span class="font-medium text-gray-800">{{data["public_key_type"]}}</span>
-                  </div>
-               </div>
-               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-layers">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                        <polyline points="2 17 12 22 22 17"></polyline>
-                        <polyline points="2 12 12 17 22 12"></polyline>
-                     </svg>
-                  </div>
-                  <div>
-                     <span class="block mb-1 text-sm text-gray-600">Public Key Bits</span>
-                     <span class="font-medium text-gray-800">{{data["public_key_bits"]}}</span>
-                  </div>
-               </div>
-               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-key">
-                        <path d="M10 2h4v4h-4z"></path>
-                        <path d="m7 7 3-3 3 3"></path>
-                        <path d="M13 10V7l-3-3-3 3v3h9z"></path>
-                        <rect width="20" height="8" x="2" y="14" rx="2"></rect>
-                        <path d="M6 18h.01"></path>
-                        <path d="M10 18h.01"></path>
-                        <path d="M14 18h.01"></path>
-                     </svg>
-                  </div>
-                  <div>
-                     <span class="block mb-1 text-sm text-gray-600">Signature Algorithm</span>
-                     <span class="font-medium text-gray-800">{{data["signature_algorithm"]}}</span>
-                  </div>
-               </div>
-               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-file-code">
-                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <path d="m10 13-2 2 2 2"></path>
-                        <path d="m14 17 2-2-2-2"></path>
-                     </svg>
-                  </div>
-                  <div>
-                     <span class="block mb-1 text-sm text-gray-600">Common Name</span>
-                     <span class="font-medium text-gray-800">{{data["issuer"]["commonName"]}}</span>
-                  </div>
-               </div>
-            </div>
-            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-scroll">
-                        <path d="M10 17v2a2 2 0 1 1-4 0v-1a2 2 0 0 0-2-2H2"></path>
-                        <path d="M12 15v6"></path>
-                        <path d="M19.5 3.5a2.8 2.8 0 0 0-4 0l-7 7a2.8 2.8 0 0 0 4 4l7-7a2.8 2.8 0 1 0-4-4"></path>
-                        <path d="m11 7 4 4"></path>
-                        <path d="M19 13l-4-4"></path>
-                     </svg>
-                  </div>
-                  <div>
-                     <span class="block mb-1 text-sm text-gray-600">Serial Number</span>
-                     <span class="font-medium text-gray-800">{{data["serial_number"]}}</span>
-                  </div>
-               </div><br>
-               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
-                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-layers">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                        <polyline points="2 17 12 22 22 17"></polyline>
-                        <polyline points="2 12 12 17 22 12"></polyline>
-                     </svg>
-                  </div>
-                  <div>
-                     <span class="block mb-1 text-sm text-gray-600">Public Key PEM</span>
-                     <span class="font-medium text-gray-800">{{data["public_key_pem"]}}</span>
-                  </div>
-               </div>
 
 
+               </div>
             </div>
-         </div>
-         
+         {% else %}
+            <p>No SSL Certificate found</p>
+         {% endif %}
       </div>
       </html>

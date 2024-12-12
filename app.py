@@ -152,15 +152,25 @@ def report():
     if len(list(document)) > 0:
         document = mongo.db.reports.find({"url": url}).sort("timestamp", -1).limit(1)
         first_doc = next(document, None)
+        # if first_doc:
+        #     doc_timestamp = first_doc.get("timestamp")
+        #     doc_time = datetime.datetime.fromisoformat(doc_timestamp)
+        #     current_time = datetime.datetime.now()
+        #     if first_doc["status"] == "inprogress":
+        #         # delete
+        #         None
         if first_doc:
             doc_timestamp = first_doc.get("timestamp")
             doc_time = datetime.datetime.fromisoformat(doc_timestamp)
             current_time = datetime.datetime.now()
+            
             if current_time - doc_time <= timedelta(days=7):
-                dss = {
-                    "summary": first_doc["siteanalysis"]["summary"]
-                }
                 return redirect(url_for("result", report_id=first_doc["id"]))
+        
+            if first_doc.get("status") == "inprogress":
+                mongo.db.reports.delete_one({"_id": first_doc["_id"]})
+
+
 
     randomid = GenRandomID()
     timestamp = datetime.datetime.now().isoformat()
@@ -297,7 +307,10 @@ def headers(report_id):
 def ssl(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
-        parsed_data = json.loads(record["ssl"])
+        if record["ssl"] != None:
+            parsed_data = json.loads(record["ssl"])
+        else:
+            parsed_data = None
         return render_template("ssl.html", id=report_id, data=parsed_data) 
     return "Report not found or not ready yet."
 
