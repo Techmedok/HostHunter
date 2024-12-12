@@ -59,7 +59,7 @@ def GetSiteDataAndHeaders(
             logger.error(f"Connection error on attempt {attempt + 1}: {e}")
             if attempt == max_retries:
                 logger.critical(f"Failed to connect to {domain} after {max_retries + 1} attempts")
-                return None
+                return None, None
             
             wait_time = 2 ** attempt
             time.sleep(wait_time)
@@ -68,7 +68,7 @@ def GetSiteDataAndHeaders(
             logger.error(f"Timeout error on attempt {attempt + 1}: {e}")
             if attempt == max_retries:
                 logger.critical(f"Request to {domain} timed out after {max_retries + 1} attempts")
-                return None
+                return None, None
             
             wait_time = 2 ** attempt
             time.sleep(wait_time)
@@ -77,16 +77,11 @@ def GetSiteDataAndHeaders(
             logger.error(f"Request exception on attempt {attempt + 1}: {e}")
             if attempt == max_retries:
                 logger.critical(f"Request to {domain} failed after {max_retries + 1} attempts")
-                return None
+                return None, None
             
             wait_time = 2 ** attempt
             time.sleep(wait_time)
         
         except Exception as e:
             logger.critical(f"Unexpected error: {e}")
-            return None
-
-# domain = "https://scamadvisor.com"
-# headers, contents = GetSiteDataAndHeaders(domain)
-# print(headers)
-# print(contents[:500])
+            return None, None

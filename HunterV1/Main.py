@@ -44,23 +44,29 @@ def Main(domain, RandomID, timestamp, mongo):
 
     Headers, Content = GetSiteDataAndHeaders(domain)
     print(Headers)
-    print(Content[:200])
+    # print(Content[:200])
 
     IncomingMails, OutgoingMails = GetMaiServerData(domain)
     print(IncomingMails)
     print(OutgoingMails)
     
-    Metadata = GetMetaData(Content)
-    print(Metadata)
+    if Content:
+        Metadata = GetMetaData(Content)
+        print(Metadata)
 
-    SocialLinks = ExtractSocialLinks(Content)
-    print(SocialLinks)
+        SocialLinks = ExtractSocialLinks(Content)
+        print(SocialLinks)
 
-    SiteTech = GetSiteTech(domain)
-    print(SiteTech)
+        SiteTech = GetSiteTech(domain)
+        print(SiteTech)
 
-    SiteAnalysis = GetSiteAnalysis(Content)
-    print(SiteAnalysis)
+        SiteAnalysis = GetSiteAnalysis(Content)
+        print(SiteAnalysis)
+    else:
+        Metadata = None
+        SocialLinks = None
+        SiteTech = None
+        SiteAnalysis = None
 
     OpenPorts = GetOpenPorts(ip)
     print(OpenPorts)
@@ -87,10 +93,10 @@ def Main(domain, RandomID, timestamp, mongo):
         "siteanalysis": {
             "sociallinks": SocialLinks,
             "sitetech": SiteTech,
-            "summary": SiteAnalysis["summary"],
-            "description": SiteAnalysis["description"],
-            "keywords": SiteAnalysis["keywords"],
-            "category": SiteAnalysis["site_category"],
+            "summary": SiteAnalysis["summary"] if SiteAnalysis else None,
+            "description": SiteAnalysis["description"] if SiteAnalysis else None,
+            "keywords": SiteAnalysis["keywords"] if SiteAnalysis else None,
+            "category": SiteAnalysis["site_category"] if SiteAnalysis else None,
         },
         "openports": OpenPorts,
     }

@@ -4,13 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading Report</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f6f8ff;
+            font-family: Arial, sans-serif;
+        }
+
+        .loader {
+            border: 4px solid #4a4ee6;
+            border-top: 4px solid transparent;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 {
+            color: #4a4ee6;
+            margin-bottom: 10px;
+        }
+
+        #status {
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
+    <div class="loader"></div>
     <h1>Generating Report...</h1>
     <p id="status">Please wait while your report is being generated.</p>
     <script>
         const reportId = "{{ report_id }}";
-
         function checkStatus() {
             fetch(`/status/${reportId}`)
                 .then(response => response.json())
@@ -25,7 +61,6 @@
                 })
                 .catch(error => console.error("Error:", error));
         }
-
         checkStatus();
     </script>
 </body>
