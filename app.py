@@ -72,7 +72,8 @@ def GenRandomID(length=16):
 @login_required
 def home():
     # return f"Hello, {session['name']}, {session["email"]}! <br><a href='/logout'>Logout</a>"
-    return f"Hello, {session['name']}, {session['email']}! <br><a href='/logout'>Logout</a>"
+    # return f"Hello, {session['name']}, {session['email']}! <br><a href='/logout'>Logout</a>"
+    return render_template("index.html")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -192,7 +193,13 @@ def status(report_id):
 def result(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
-        return render_template("report.html", id=report_id, data=record) 
+        description = record["siteanalysis"]["description"]
+        regname = record["whois"]["registrant"]["registrantname"]
+        ip = record["ip"]
+        regdate = record["whois"]["domain"]["domaincreated"]
+        expdate = record["whois"]["domain"]["domainexpiration"]
+        url = record["url"]
+        return render_template("summary.html", id=report_id, desc=description, rname=regname, ip=ip, rdate = regdate, edate = expdate, url = url ) 
     return "Report not found or not ready yet."
 
 @app.route("/whois/<report_id>")
