@@ -37,5 +37,5 @@ def ExtractSocialLinks(content):
         logging.error(f"Error extracting social links from content: {e}")
     
     social_links = {k: list(v) for k, v in social_links.items() if v}
-    
+    social_links = {k: v[0] for k, v in social_links.items() if v}
     return social_links

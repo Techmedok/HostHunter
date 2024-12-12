@@ -211,13 +211,46 @@ def IPData(report_id):
         return render_template("ipdata.html", id=report_id, data=record["ipdata"]) 
     return "Report not found or not ready yet."
 
+def transform_dns_records(data):
+    if data is None:
+        return {}  # Return an empty dictionary if no DNS records are found
+    
+    transformed = {}
+    
+    # Check if each record type exists before transforming
+    if 'A' in data and data['A']:
+        transformed['A'] = [{'Content': record['Content'], 'TTL': record['TTL']} for record in data['A']]
+    
+    if 'AAAA' in data and data['AAAA']:
+        transformed['AAAA'] = [{'Content': record['Content'], 'TTL': record['TTL']} for record in data['AAAA']]
+    
+    if 'MX' in data and data['MX']:
+        transformed['MX'] = [{'Content': record['Exchange'], 'Preference': record['Preference'], 'Exchange': record['Exchange'], 'TTL': record['TTL']} for record in data['MX']]
+    
+    if 'NS' in data and data['NS']:
+        transformed['NS'] = [{'Content': record['Content'], 'TTL': record['TTL']} for record in data['NS']]
+    
+    if 'TXT' in data and data['TXT']:
+        transformed['TXT'] = [{'Content': record['Content'], 'TTL': record['TTL']} for record in data['TXT']]
+    
+    if 'SOA' in data and data['SOA']:
+        transformed['SOA'] = [{'Mname': record['Mname'], 'Rname': record['Rname'], 'Serial': record['Serial'], 
+                               'Refresh': record['Refresh'], 'Retry': record['Retry'], 
+                               'Expire': record['Expire'], 'Minimum': record['Minimum'], 
+                               'TTL': record['TTL']} for record in data['SOA']]
+    
+    if 'PTR' in data and data['PTR']:
+        transformed['PTR'] = [{'Content': record['Content']} for record in data['PTR']]
+    
+    return transformed
+
 @app.route("/dns/<report_id>")
 @login_required
 def dns(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
-        # return render_template("whois.html", data=record["whois"]) 
-        return f"{record['dnsrecords']}"
+        transformed_data = transform_dns_records(record['dnsrecords'])
+        return render_template("dns.html", id=report_id, data=transformed_data) 
     return "Report not found or not ready yet."
 
 @app.route("/siteanalysis/<report_id>")
@@ -225,8 +258,7 @@ def dns(report_id):
 def siteanalysis(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
-        # return render_template("whois.html", data=record["whois"]) 
-        return f"{record['siteanalysis']}"
+        return render_template("siteanalysis.html", id=report_id, data=record["siteanalysis"]) 
     return "Report not found or not ready yet."
 
 @app.route("/mailserver/<report_id>")
@@ -234,8 +266,7 @@ def siteanalysis(report_id):
 def mailserver(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
-        # return render_template("whois.html", data=record["whois"]) 
-        return f"{record['mailservers']}"
+        return render_template("mailservers.html", id=report_id, data=record["mailservers"]) 
     return "Report not found or not ready yet."
 
 @app.route("/metadata/<report_id>")
@@ -260,8 +291,7 @@ def headers(report_id):
 def ssl(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
-        # return render_template("whois.html", data=record["whois"]) 
-        return f"{record['ssl']}"
+        return render_template("ssl.html", id=report_id, data=record["ssl"]) 
     return "Report not found or not ready yet."
 
 @app.route("/openports/<report_id>")
@@ -277,6 +307,17 @@ def openports(report_id):
 def history():
     history = mongo.db.reports.find({"user": session['email']})
     return f"{len(list(history))}"
+
+@app.template_filter('get_last_part')
+def get_last_part(url):
+    return url.split('/')[-1]
+
+@app.template_filter('capitalize_first')
+def capitalize_first(text):
+    return text.split('.')[0].capitalize()
+
+app.jinja_env.filters['get_last_part'] = get_last_part
+app.jinja_env.filters['capitalize_first'] = capitalize_first
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
