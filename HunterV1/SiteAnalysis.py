@@ -27,7 +27,8 @@ def GetSiteAnalysis(content):
                                     description (Paragraphs appended in String. Description of the Site),
                                     keywords (array. Keywords of Site),
                                     site_category (String. Category of Site)
-                                I dont need any other data other than this in your output.
+                                I dont need any other data other than this in your output. Your output should be in English.
+                                Please translate the contents to English if it is in other language.  
                                 Site Contents:
                                 {text}
                             """,

@@ -241,8 +241,8 @@
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">Socket SSL Version</span>
-                        <span class="font-medium text-gray-800">{{data["socket_ssl_version"]}}</span>
+                        <span class="block mb-1 text-sm text-gray-600">Hostname</span>
+                        <span class="font-medium text-gray-800">{{data["hostname"]}}</span>
                      </div>
                   </div>
                   <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
@@ -253,8 +253,8 @@
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">Cipher</span>
-                        <span class="font-medium text-gray-800">{{data["cipher"]}}</span>
+                        <span class="block mb-1 text-sm text-gray-600">Organization Name</span>
+                        <span class="font-medium text-gray-800">{{data["issuer"]["organizationName"]}}</span>
                      </div>
                   </div>
                   <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
@@ -265,8 +265,8 @@
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">Issuer Country</span>
-                        <span class="font-medium text-gray-800">{{data["issuer"]["countryName"]}} </span>
+                        <span class="block mb-1 text-sm text-gray-600">Has SSL?</span>
+                        <span class="font-medium text-gray-800">{{data["has_ssl"]}}</span>
                      </div>
                   </div>
                   <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
@@ -286,8 +286,8 @@
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">Organization</span>
-                        <span class="font-medium text-gray-800">{{data["issuer"]["organizationName"]}}</span>
+                        <span class="block mb-1 text-sm text-gray-600">Is Valid?</span>
+                        <span class="font-medium text-gray-800">{{data["is_valid"]}}</span>
                      </div>
                   </div>
                </div>
@@ -303,8 +303,8 @@
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">Common Name</span>
-                        <span class="font-medium text-gray-800">{{data["issuer"]["commonName"]}}</span>
+                        <span class="block mb-1 text-sm text-gray-600">Port</span>
+                        <span class="font-medium text-gray-800">{{data["port"]}}</span>
                      </div>
                   </div>
                   <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
@@ -318,8 +318,8 @@
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">Serial Number</span>
-                        <span class="font-medium text-gray-800">{{data["serial_number"]}}</span>
+                        <span class="block mb-1 text-sm text-gray-600">Country Name</span>
+                        <span class="font-medium text-gray-800">{{data["issuer"]["countryName"]}}</span>
                      </div>
                   </div>
                   <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
@@ -334,8 +334,8 @@
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">Not Valid Before</span>
-                        <span class="font-medium text-gray-800">{{data["not_valid_before"]}}</span>
+                        <span class="block mb-1 text-sm text-gray-600">SSL Version</span>
+                        <span class="font-medium text-gray-800">{{data["ssl_version"]}}</span>
                      </div>
                   </div>
                   <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
@@ -348,8 +348,8 @@
                         </svg>
                      </div>
                      <div>
-                        <span class="block mb-1 text-sm text-gray-600">Not Valid After</span>
-                        <span class="font-medium text-gray-800">{{data["not_valid_after"]}}</span>
+                        <span class="block mb-1 text-sm text-gray-600">Days Remaining</span>
+                        <span class="font-medium text-gray-800">{{data["days_remaining"]}} days</span>
                      </div>
                   </div>
                </div>
@@ -366,8 +366,8 @@
                      </svg>
                   </div>
                   <div>
-                     <span class="block mb-1 text-sm text-gray-600">Signature Algorithm</span>
-                     <span class="font-medium text-gray-800">{{data["signature_algorithm"]}}</span>
+                     <span class="block mb-1 text-sm text-gray-600">Not Valid Before</span>
+                     <span class="font-medium text-gray-800">{{data["not_valid_before"]}}</span>
                   </div>
                </div>
                <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
@@ -379,8 +379,8 @@
                      </svg>
                   </div>
                   <div>
-                     <span class="block mb-1 text-sm text-gray-600">Certificate Version</span>
-                     <span class="font-medium text-gray-800">{{data["version"]}}</span>
+                     <span class="block mb-1 text-sm text-gray-600">Not Valid After</span>
+                     <span class="font-medium text-gray-800">{{data["not_valid_after"]}}</span>
                   </div>
                </div>
                <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
@@ -396,8 +396,8 @@
                      </svg>
                   </div>
                   <div>
-                     <span class="block mb-1 text-sm text-gray-600">Public Key</span>
-                     <span class="font-medium text-gray-800">{{data["public_key"]}}</span>
+                     <span class="block mb-1 text-sm text-gray-600">Version</span>
+                     <span class="font-medium text-gray-800">{{data["version"]}}</span>
                   </div>
                </div>
                <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
@@ -410,13 +410,105 @@
                      </svg>
                   </div>
                   <div>
-                     <span class="block mb-1 text-sm text-gray-600">Public Key String</span>
-                     <span class="font-medium text-gray-800">{{data["public_key_str"]}}</span>
+                     <span class="block mb-1 text-sm text-gray-600">Cipher</span>
+                     <span class="font-medium text-gray-800">{{data["cipher"]}}</span>
                   </div>
                </div>
+            </div>
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-scroll">
+                        <path d="M10 17v2a2 2 0 1 1-4 0v-1a2 2 0 0 0-2-2H2"></path>
+                        <path d="M12 15v6"></path>
+                        <path d="M19.5 3.5a2.8 2.8 0 0 0-4 0l-7 7a2.8 2.8 0 0 0 4 4l7-7a2.8 2.8 0 1 0-4-4"></path>
+                        <path d="m11 7 4 4"></path>
+                        <path d="M19 13l-4-4"></path>
+                     </svg>
+                  </div>
+                  <div>
+                     <span class="block mb-1 text-sm text-gray-600">Public Key Type</span>
+                     <span class="font-medium text-gray-800">{{data["public_key_type"]}}</span>
+                  </div>
+               </div>
+               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-layers">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                     </svg>
+                  </div>
+                  <div>
+                     <span class="block mb-1 text-sm text-gray-600">Public Key Bits</span>
+                     <span class="font-medium text-gray-800">{{data["public_key_bits"]}}</span>
+                  </div>
+               </div>
+               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-key">
+                        <path d="M10 2h4v4h-4z"></path>
+                        <path d="m7 7 3-3 3 3"></path>
+                        <path d="M13 10V7l-3-3-3 3v3h9z"></path>
+                        <rect width="20" height="8" x="2" y="14" rx="2"></rect>
+                        <path d="M6 18h.01"></path>
+                        <path d="M10 18h.01"></path>
+                        <path d="M14 18h.01"></path>
+                     </svg>
+                  </div>
+                  <div>
+                     <span class="block mb-1 text-sm text-gray-600">Signature Algorithm</span>
+                     <span class="font-medium text-gray-800">{{data["signature_algorithm"]}}</span>
+                  </div>
+               </div>
+               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-file-code">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <path d="m10 13-2 2 2 2"></path>
+                        <path d="m14 17 2-2-2-2"></path>
+                     </svg>
+                  </div>
+                  <div>
+                     <span class="block mb-1 text-sm text-gray-600">Common Name</span>
+                     <span class="font-medium text-gray-800">{{data["issuer"]["commonName"]}}</span>
+                  </div>
+               </div>
+            </div>
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900 lucide lucide-scroll">
+                        <path d="M10 17v2a2 2 0 1 1-4 0v-1a2 2 0 0 0-2-2H2"></path>
+                        <path d="M12 15v6"></path>
+                        <path d="M19.5 3.5a2.8 2.8 0 0 0-4 0l-7 7a2.8 2.8 0 0 0 4 4l7-7a2.8 2.8 0 1 0-4-4"></path>
+                        <path d="m11 7 4 4"></path>
+                        <path d="M19 13l-4-4"></path>
+                     </svg>
+                  </div>
+                  <div>
+                     <span class="block mb-1 text-sm text-gray-600">Serial Number</span>
+                     <span class="font-medium text-gray-800">{{data["serial_number"]}}</span>
+                  </div>
+               </div><br>
+               <div class="flex items-center p-4 space-x-4 transition-all duration-300 transform border bg-white/30 backdrop-blur-sm rounded-xl border-white/20 hover:border-blue-100/50 hover:scale-105">
+                  <div class="p-3 rounded-full shadow-md bg-gradient-to-br from-blue-50 to-pink-50">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-900 lucide lucide-layers">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                     </svg>
+                  </div>
+                  <div>
+                     <span class="block mb-1 text-sm text-gray-600">Public Key PEM</span>
+                     <span class="font-medium text-gray-800">{{data["public_key_pem"]}}</span>
+                  </div>
+               </div>
+
+
             </div>
          </div>
          
       </div>
-   </body>
-</html>
+      </html>

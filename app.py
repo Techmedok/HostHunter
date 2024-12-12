@@ -13,6 +13,7 @@ import HunterV1.Main
 import string
 import random
 from datetime import timedelta
+import json
 
 load_dotenv()
 
@@ -296,7 +297,8 @@ def headers(report_id):
 def ssl(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
-        return render_template("ssl.html", id=report_id, data=record["ssl"]) 
+        parsed_data = json.loads(record["ssl"])
+        return render_template("ssl.html", id=report_id, data=parsed_data) 
     return "Report not found or not ready yet."
 
 @app.route("/openports/<report_id>")

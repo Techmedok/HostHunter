@@ -5,6 +5,13 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Domain WHOIS Information</title>
       <script src="https://cdn.tailwindcss.com"></script>
+      <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+      <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />      <style>
+          #map {
+              height: 500px; /* Increase the height of the map div */
+              width: 100%;
+          }
+      </style>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide-icons/0.321.0/font/lucide.min.css">
    </head>
    <body class="relative min-h-screen overflow-hidden overflow-y-scroll bg-gradient-to-br from-blue-50 via-pink-50 to-blue-100 font-inter">
@@ -234,12 +241,12 @@
                </div>
             </div>
             <!--Map-->
+
             <div class="p-8 mt-10 transition-all duration-500 transform border shadow-2xl bg-white/20 backdrop-blur-xl rounded-3xl border-white/20 hover:border-blue-100/50 hover:shadow-4xl hover:-translate-y-2">
                <h2 class="mb-6 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-pink-600">
                   Map
                </h2>
-               <div class="grid grid-cols-2 gap-6 md:grid-cols-2">
-               </div>
+               <div id='map'></div>
             </div>
             <div class="p-8 mt-10 transition-all duration-500 transform border shadow-2xl bg-white/20 backdrop-blur-xl rounded-3xl border-white/20 hover:border-blue-100/50 hover:shadow-4xl hover:-translate-y-2">
                <h2 class="mb-6 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-pink-600">
@@ -366,6 +373,23 @@
             </div>
          </div>
       </div>
+      <script>
+          // Set your Mapbox access token
+          mapboxgl.accessToken = 'pk.eyJ1Ijoibml0aXNoa3VtYXIyMDAzIiwiYSI6ImNqMWh2am8zODAwcHEyd29hOWY5cnptcncifQ.cWtIQbvusFVG51JIniU8rw';
+      
+          // Initialize the map
+          const map = new mapboxgl.Map({
+              container: 'map', // ID of the map container
+              style: 'mapbox://styles/mapbox/streets-v11', // Map style
+              center: [{{data["lon"]}}, {{data["lat"]}}], // Longitude, Latitude (example: Bangalore, India)
+              zoom: 10 // Initial zoom level
+          });
+      
+          // Add a marker to the map
+          new mapboxgl.Marker()
+              .setLngLat([{{data["lon"]}}, {{data["lat"]}}]) // Longitude, Latitude for the marker
+              .addTo(map);
+      </script>
    </body>
 </html>
 
