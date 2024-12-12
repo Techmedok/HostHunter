@@ -213,11 +213,10 @@ def IPData(report_id):
 
 def transform_dns_records(data):
     if data is None:
-        return {}  # Return an empty dictionary if no DNS records are found
+        return {} 
     
     transformed = {}
     
-    # Check if each record type exists before transforming
     if 'A' in data and data['A']:
         transformed['A'] = [{'Content': record['Content'], 'TTL': record['TTL']} for record in data['A']]
     
@@ -282,8 +281,7 @@ def metadata(report_id):
 def headers(report_id):
     record = mongo.db.reports.find_one({"id": report_id})
     if record and record.get("status") == "completed":
-        # return render_template("whois.html", data=record["whois"]) 
-        return f"{record['headers']}"
+        return render_template("headers.html", id=report_id, data=record["headers"]) 
     return "Report not found or not ready yet."
 
 @app.route("/ssl/<report_id>")

@@ -5,6 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Domain WHOIS Information</title>
       <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="https://fa6p.pages.dev/css/all.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide-icons/0.321.0/font/lucide.min.css">
    </head>
    <body class="relative min-h-screen overflow-hidden overflow-y-scroll bg-gradient-to-br from-blue-50 via-pink-50 to-blue-100 font-inter">
@@ -166,8 +167,21 @@
             Site Analysis
             </span>
          </a>
-         <!-- Scam Rating -->
-         <a href="scamrating.html" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
+         <!-- Headers -->
+         <a href="{{ url_for('headers', report_id = id) }}" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
+            <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gray-100/50">
+               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 lucide lucide-align-left group-hover:text-blue-600">
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="12" x2="15" y2="12"></line>
+                  <line x1="3" y1="18" x2="10" y2="18"></line>
+               </svg>
+            </div>
+            <span class="font-medium text-gray-700 transition-colors duration-300 group-hover:text-blue-700">
+               HTTP Headers
+            </span>
+         </a>
+         <!-- Site Reputation -->
+         <a href="" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
             <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gray-100/50">
                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 lucide lucide-shield-off group-hover:text-blue-600">
                   <path d="M19.69 14a6.9 6.9 0 0 0 .31-2V5l-8-3-3.16 1.18"></path>
@@ -176,7 +190,7 @@
                </svg>
             </div>
             <span class="font-medium text-gray-700 transition-colors duration-300 group-hover:text-blue-700">
-            Scam Rating
+            Site Reputation
             </span>
          </a>
          <!-- Open Ports -->
@@ -192,7 +206,7 @@
             </span>
          </a>
          <!-- Vulnerabilities -->
-         <a href="vulnerabilities.html" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
+         <a href="" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
             <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gray-100/50">
                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 lucide lucide-alert-triangle group-hover:text-blue-600">
                   <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
@@ -205,7 +219,7 @@
             </span>
          </a>
          <!-- Contact Details -->
-         <a href="contactdetails.html" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
+         <a href="" class="relative flex items-center p-1.5 transition-all duration-500 transform rounded-2xl hover:bg-white/20 hover:scale-105 group">
             <div class="p-2 mr-3 transition-all duration-300 rounded-full group-hover:scale-110 group-hover:rotate-6 bg-gray-100/50">
                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 lucide lucide-phone group-hover:text-blue-600">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
